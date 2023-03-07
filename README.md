@@ -9,6 +9,10 @@ strings ( str / String ) and returning String types.
 
 https://github.com/jrhazlett/easy_paths
 
+## Rust crate
+
+https://crates.io/crates/easy_paths
+
 ## Warnings
 
 This library is tested on mac and linux.
@@ -18,6 +22,8 @@ This is completely *untested* on Windows.
 ## License: MIT
 
 ## Usage examples
+
+All arguments can be of type 'str' or 'String'.
 
 ### get_absolute_path
 
