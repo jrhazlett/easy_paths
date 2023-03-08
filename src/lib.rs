@@ -337,65 +337,65 @@ mod tests {
     fn test_raise_error_if_path_is_not_in_project_absolute() {
         let mut string_path = "/badpath";
         match raise_error_if_path_is_not_in_project(&string_path) {
-            Some(_err) => {}
-            None => {
+            Ok( () ) => {
                 panic!(
                     "{}",
                     [
                         "Did not return error on bad absolute path.".to_string(),
                         format!("string_path = {}", string_path,)
                     ]
-                    .join("\n")
+                        .join("\n")
                 )
             }
+            Err( _err ) => {}
         }
         string_path = "test";
         match raise_error_if_path_is_not_in_project(&string_path) {
-            Some(_err) => {
+            Ok(()) => {}
+            Err(_err) => {
                 panic!(
                     "{}",
                     [
                         "Returned error on good relative path.".to_string(),
                         format!("string_path = {}", string_path,),
                     ]
-                    .join("\n")
+                        .join("\n")
                 )
             }
-            None => {}
         }
         string_path = "bad/test";
         match raise_error_if_path_is_not_in_project(&string_path) {
-            Some(_err) => {}
-            None => {
+            Ok(()) => {
                 panic!(
                     "{}",
                     [
                         "Did not return error on bad relative path.".to_string(),
                         format!("string_path = {}", string_path,),
                     ]
-                    .join("\n")
+                        .join("\n")
                 )
             }
+            Err(_err) => {}
         }
     }
 
     #[test]
     fn test_raise_error_if_path_points_to_src() {
         match raise_error_if_path_points_to_src(&"src") {
-            Some(_err) => {}
-            None => panic!("Did not return error"),
+            Ok(()) => { panic!("Did not return error") }
+            Err( _err ) => {},
         }
         match raise_error_if_path_points_to_src(&"src/") {
-            Some(_err) => {}
-            None => panic!("Did not return error"),
+            Ok(()) => { panic!("Did not return error") }
+            Err(_err) => {},
         }
         match raise_error_if_path_points_to_src(&format!("{}/src/", env!("CARGO_MANIFEST_DIR"),)) {
-            Some(_err) => {}
-            None => panic!("No error returned"),
+            Ok(()) => {panic!("No error returned")}
+            Err(_err) => {},
         }
         match raise_error_if_path_points_to_src(&"src/") {
-            Some(_err) => {}
-            None => panic!("No error returned"),
+            Ok(()) => {panic!("No error returned")}
+            Err(_err) => {},
         }
     }
 
@@ -403,8 +403,7 @@ mod tests {
     fn test_raise_error_if_path_points_to_cargo_toml() {
         let mut string_path = format!("{}/Cargo.toml", env!("CARGO_MANIFEST_DIR"),);
         match raise_error_if_path_points_to_cargo_toml(&string_path) {
-            Some(_err) => {}
-            None => {
+            Ok(()) => {
                 panic!(
                     "{}",
                     [
@@ -412,35 +411,38 @@ mod tests {
                             .to_string(),
                         format!("string_path = {}", string_path,),
                     ]
-                    .join("\n")
+                        .join("\n")
                 )
             }
+            Err(_err) => {}
         }
         string_path = "Cargo.toml".to_string();
         match raise_error_if_path_points_to_cargo_toml(&string_path) {
-            Some(_err) => {}
-            None => panic!(
-                "{}",
-                [
-                    "Didn't raise error when passed the relative path to Cargo.toml".to_string(),
-                    format!("string_path = {}", string_path,),
-                ]
-                .join("\n")
-            ),
+            Ok(()) => {
+                panic!(
+                    "{}",
+                    [
+                        "Didn't raise error when passed the relative path to Cargo.toml".to_string(),
+                        format!("string_path = {}", string_path,),
+                    ]
+                        .join("\n")
+                )
+            }
+            Err(_err) => {},
         }
         string_path = "src".to_string();
         match raise_error_if_path_points_to_cargo_toml(&string_path) {
-            Some(_err) => {
+            Ok(()) => {}
+            Err(_err) => {
                 panic!(
                     "{}",
                     [
                         "Raised error when not pointing to Cargo.toml".to_string(),
                         format!("string_path = {}", string_path,),
                     ]
-                    .join("\n")
+                        .join("\n")
                 )
             }
-            None => {}
         }
     }
 
@@ -448,45 +450,47 @@ mod tests {
     fn test_raise_error_if_path_points_to_main_rs() {
         let mut string_path = format!("{}/src/main.rs", env!("CARGO_MANIFEST_DIR"),);
         match raise_error_if_path_points_to_main_rs(&string_path) {
-            Some(_err) => {}
-            None => {
+            Ok(()) => {
                 panic!(
                     "{}",
                     [
                         "Failed to return error when passed absolute path to main.rs".to_string(),
                         format!("string_path = {}", string_path,),
                     ]
-                    .join("\n")
+                        .join("\n")
                 )
             }
+            Err(_err) => {}
         }
         string_path = "src/main.rs".to_string();
         match raise_error_if_path_points_to_main_rs(&string_path) {
-            Some(_err) => {}
-            None => {
+            Ok(()) => {
                 panic!(
                     "{}",
                     [
                         "Failed to return error when passed relative path to main.rs".to_string(),
                         format!("string_path = {}", string_path,),
                     ]
-                    .join("\n")
+                        .join("\n")
                 )
             }
+            Err(_err) => {}
         }
         string_path = "src".to_string();
         match raise_error_if_path_points_to_main_rs(&string_path) {
-            Some(_err) => {
+            Ok(()) => {
+
+            }
+            Err(_err) => {
                 panic!(
                     "{}",
                     [
                         "Raised error when not pointing at main.rs".to_string(),
                         format!("string_path = {}", string_path,),
                     ]
-                    .join("\n")
+                        .join("\n")
                 )
             }
-            None => {}
         }
     }
 }
@@ -1577,14 +1581,14 @@ pub fn is_path_inside_dir_parent<T1: Display, T2: Display>(
 /// * arg_string_path: string-like
 /// # Examples
 /// let err = match raise_error_if_path_does_not_exist( &"/A/B/C" ) {
-///     Some( err ) => panic!( "{:?}", err, ),
-///     None => {},
+///     Ok( () ) => {},
+///     Err( err ) => panic!( "{:?}", err, ),
 /// };
 pub fn raise_error_if_path_does_not_exist<T: Debug + Display>(
     arg_string_path: &T,
-) -> Option<String> {
+) -> Result<(), String> {
     if !Path::new(format!("{}", arg_string_path,).as_str()).exists() {
-        return Some(
+        return Err(
             [
                 "Error: path does not exist.".to_string(),
                 format!("arg_string_path = {}", arg_string_path,),
@@ -1598,7 +1602,7 @@ pub fn raise_error_if_path_does_not_exist<T: Debug + Display>(
             .join("\n"),
         );
     }
-    None
+    Ok(())
 }
 
 /// Returns an error if arg_string_path points to a location outside the project.
@@ -1607,12 +1611,12 @@ pub fn raise_error_if_path_does_not_exist<T: Debug + Display>(
 /// * arg_string_path: string-like
 /// # Examples
 /// let err = match raise_error_if_path_is_not_in_project( &"/A/B/C" ) {
-///     Some( err ) => panic!( "{:?}", err, ),
-///     None => {},
+///     Ok( () ) => {},
+///     Err( err ) => panic!( "{:?}", err, ),
 /// };
 pub fn raise_error_if_path_is_not_in_project<T: Debug + Display>(
     arg_string_path: &T,
-) -> Option<String> {
+) -> Result<(), String> {
     let path_buf_control = PathBuf::from(env!("CARGO_MANIFEST_DIR"));
     let bool_raise_error = {
         let path_buf_from_arg = PathBuf::from(format!("{}", arg_string_path,));
@@ -1626,7 +1630,7 @@ pub fn raise_error_if_path_is_not_in_project<T: Debug + Display>(
         }
     };
     if bool_raise_error {
-        return Some(
+        return Err(
             [
                 "Error: arg_string_path is either the project directory or outside it.".to_string(),
                 format!("arg_string_path = {}", arg_string_path,),
@@ -1635,7 +1639,7 @@ pub fn raise_error_if_path_is_not_in_project<T: Debug + Display>(
             .join("\n"),
         );
     }
-    None
+    Ok(())
 }
 
 /// Returns an error if arg_string_path points to project directory.
@@ -1649,11 +1653,11 @@ pub fn raise_error_if_path_is_not_in_project<T: Debug + Display>(
 /// };
 pub fn raise_error_if_path_points_to_project_root<T: Display>(
     arg_string_path: &T,
-) -> Option<String> {
+) -> Result<(), String> {
     if Path::new(&format!("{}", arg_string_path,))
         == Path::new(&env!("CARGO_MANIFEST_DIR").to_string())
     {
-        return Some(
+        return Err(
             [
                 "Error: arg_string_path points at project root directory.".to_string(),
                 format!("arg_string_path = {}", arg_string_path,),
@@ -1661,7 +1665,7 @@ pub fn raise_error_if_path_points_to_project_root<T: Display>(
             .join("\n"),
         );
     }
-    None
+    Ok(())
 }
 
 /// Returns an error if arg_string_path points to src within project.
@@ -1676,9 +1680,9 @@ pub fn raise_error_if_path_points_to_project_root<T: Display>(
 /// };
 pub fn raise_error_if_path_points_to_src<T: Debug + Display>(
     arg_string_path: &T,
-) -> Option<String> {
+) -> Result<(), String> {
     if are_paths_the_same_assume_project_dir(arg_string_path, &"src") {
-        return Some(
+        return Err(
             [
                 "Error: arg_string_path points at the src directory.".to_string(),
                 format!("arg_string_path = {}", arg_string_path,),
@@ -1686,7 +1690,7 @@ pub fn raise_error_if_path_points_to_src<T: Debug + Display>(
             .join("\n"),
         );
     }
-    None
+    Ok(())
 }
 
 /// Returns an error if arg_string_path points to Cargo.toml within project.
@@ -1700,9 +1704,9 @@ pub fn raise_error_if_path_points_to_src<T: Debug + Display>(
 /// };
 pub fn raise_error_if_path_points_to_cargo_toml<T: Debug + Display>(
     arg_string_path: &T,
-) -> Option<String> {
+) -> Result<(), String> {
     if are_paths_the_same_assume_project_dir(arg_string_path, &"Cargo.toml") {
-        return Some(
+        return Err(
             [
                 "Error: arg_string_path points at Cargo.toml.".to_string(),
                 format!("arg_string_path = {}", &arg_string_path,),
@@ -1710,7 +1714,7 @@ pub fn raise_error_if_path_points_to_cargo_toml<T: Debug + Display>(
             .join("\n"),
         );
     }
-    None
+    Ok(())
 }
 
 /// Returns an error if arg_string_path points at main.rs in the project.
@@ -1724,9 +1728,9 @@ pub fn raise_error_if_path_points_to_cargo_toml<T: Debug + Display>(
 /// };
 pub fn raise_error_if_path_points_to_main_rs<T: Debug + Display>(
     arg_string_path: &T,
-) -> Option<String> {
+) -> Result<(), String> {
     if are_paths_the_same_assume_project_dir(arg_string_path, &"src/main.rs") {
-        return Some(
+        return Err(
             [
                 "Error: arg_string_path points at main.rs.".to_string(),
                 format!("arg_string_path = {}", arg_string_path,),
@@ -1734,7 +1738,7 @@ pub fn raise_error_if_path_points_to_main_rs<T: Debug + Display>(
             .join("\n"),
         );
     }
-    None
+    Ok(())
 }
 //
 // Public - get - from type

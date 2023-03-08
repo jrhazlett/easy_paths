@@ -1,13 +1,12 @@
 [package]
 name = "easy_paths"
-version = "0.1.0"
+version = "0.1.1"
 authors = [ "James Hazlett <james@jameshazlett.com>" ]
 description = "Convenience library for rapidly processing string-type paths."
 categories = [ "development-tools", "filesystem" ]
 edition = "2021"
 keywords = [ "disk", "files", "paths", "storage", "strings" ]
 license = "MIT"
-license-file = "LICENSE"
 readme = "README.md"
 repository = "https://github.com/jrhazlett/easy_paths"
 
