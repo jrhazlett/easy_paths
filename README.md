@@ -289,7 +289,6 @@ All arguments can be of type 'str' or 'String'.
 
     assert_eq!( easy_paths::is_existing_path( &"test/test_b/test_c/text_b_c_a.txt" ), true, )
 
-    
 ### is_path_type
 
     assert_eq!( easy_paths::is_path_type( &Path::new( &"test/test_b/test_c/text_b_c_a.txt" ) ), true, )
@@ -306,127 +305,34 @@ All arguments can be of type 'str' or 'String'.
 
     let mut string_path = "/badpath";
     match easy_paths::raise_error_if_path_is_not_in_project( &string_path ) {
-        Some( _err ) => {},
-        None => {
-            panic!( "{}", [
-                "Did not return error on bad absolute path.".to_string(),
-                format!( "string_path = {}", string_path, )
-            ].join( "\n" ) )
-        },
-    }
-
-    string_path = "test";
-    match easy_paths::raise_error_if_path_is_not_in_project( &string_path ) {
-        Some( _err ) => {
-            panic!( "{}", [
-                "Returned error on good relative path.".to_string(),
-                format!( "string_path = {}", string_path, ),
-            ].join( "\n" ) )
-        },
-        None => {},
-    }
-
-    string_path = "bad/test";
-    match easy_paths::raise_error_if_path_is_not_in_project( &string_path ) {
-        Some( _err ) => {},
-        None => {
-            panic!( "{}", [
-                "Did not return error on bad relative path.".to_string(),
-                format!( "string_path = {}", string_path, ),
-            ].join( "\n" ) )
-        },
+        Ok( () ) => {}
+        Err( err ) => { panic!( "{}", err ) }
     }
 
 ### raise_error_if_path_points_to_src
 
     match easy_paths::raise_error_if_path_points_to_src( &"src" ) {
-        Some( _err ) => {},
-        None => panic!( "Did not return error" )
-    }
-
-    match easy_paths::raise_error_if_path_points_to_src( &"src/" ) {
-        Some( _err ) => {},
-        None => panic!( "Did not return error" )
-    }
-
-    match easy_paths::raise_error_if_path_points_to_src( &format!( "{}/src/", env!( "CARGO_MANIFEST_DIR" ), ) ) {
-        Some( _err ) => {},
-        None => panic!( "No error returned" ),
-    }
-
-    match easy_paths::raise_error_if_path_points_to_src( &"src/" ) {
-        Some( _err ) => {},
-        None => panic!( "No error returned" ),
+        Ok( () ) => {}
+        Err( err ) => { panic!( "{}", err ) }
     }
 
 ### raise_error_if_path_points_to_cargo_toml
 
     let mut string_path = format!( "{}/Cargo.toml", env!( "CARGO_MANIFEST_DIR" ), );
     match easy_paths::raise_error_if_path_points_to_cargo_toml( &string_path ) {
-        Some( _err ) => {},
-        None => {
-            panic!( "{}", [
-                "Didn't raise error when passed the absolute path to Cargo.toml".to_string(),
-                format!( "string_path = {}", string_path, ),
-            ].join("\n") )
-        }
+        Ok( () ) => {}
+        Err( err ) => { panic!( "{}", err ) }
     }
 
-    string_path = "Cargo.toml".to_string();
-    match easy_paths::raise_error_if_path_points_to_cargo_toml( &string_path ) {
-        Some( _err ) => {},
-        None => panic!( "{}", [
-            "Didn't raise error when passed the relative path to Cargo.toml".to_string(),
-            format!( "string_path = {}", string_path, ),
-        ].join("\n") ),
-    }
-
-    string_path = "src".to_string();
-    match easy_paths::raise_error_if_path_points_to_cargo_toml( &string_path ) {
-        Some( _err ) => {
-            panic!( "{}", [
-                "Raised error when not pointing to Cargo.toml".to_string(),
-                format!( "string_path = {}", string_path, ),
-            ].join( "\n" ) )
-        },
-        None => {}
-    }
-
-    
 ### raise_error_if_path_points_to_main_rs
 
     let mut string_path = format!( "{}/src/main.rs", env!( "CARGO_MANIFEST_DIR" ), );
     match easy_paths::raise_error_if_path_points_to_main_rs( &string_path ) {
-        Some( _err ) => {},
-        None => {
-            panic!( "{}", [
-                "Failed to return error when passed absolute path to main.rs".to_string(),
-                format!( "string_path = {}", string_path, ),
-            ].join( "\n" ) )
-        }
+        Ok( () ) => {}
+        Err( err ) => { panic!( "{}", err ) }
     }
 
-    string_path = "src/main.rs".to_string();
-    match easy_paths::raise_error_if_path_points_to_main_rs( &string_path ) {
-        Some( _err ) => {},
-        None => {
-            panic!( "{}", [
-                "Failed to return error when passed relative path to main.rs".to_string(),
-                format!( "string_path = {}", string_path, ),
-            ].join( "\n" ) )
-        }
-    }
 
-    string_path = "src".to_string();
-    match easy_paths::raise_error_if_path_points_to_main_rs( &string_path ) {
-        Some( _err ) => {
-            panic!( "{}", [
-                "Raised error when not pointing at main.rs".to_string(),
-                format!( "string_path = {}", string_path, ),
-            ].join( "\n" ) )
-        },
-        None => {}
-    }
 
 
 

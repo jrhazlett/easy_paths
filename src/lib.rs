@@ -533,8 +533,8 @@ pub fn get_absolute_path<T: Debug + Display>(arg_string_path: &T) -> String {
 /// * arg_string_path: string-like
 /// # Examples
 /// let string_absolute_path = match get_absolute_path( &string_path_relative ) {
-///     Ok( string_result ) => string_result,
-///     Err( err ) => panic!( "{}", err )
+///     Ok( string_result ) => { string_result }
+///     Err( err ) => { panic!( "{}", err ) }
 /// };
 pub fn get_absolute_path_or_error<T: Debug + Display>(
     arg_string_path: &T,
@@ -574,8 +574,8 @@ pub fn get_absolute_path_or_error<T: Debug + Display>(
 /// # Examples
 /// let string_path = "test/test_a/text_a_a.txt";
 /// let result = match get_base_name( &string_path ) {
-///     Some( string_result ) => string_result,
-///     None => panic!( "" )
+///     Some( string_result ) => { string_result }
+///     None => { panic!( "" ) }
 /// };
 /// let expected = "text_a_a.txt".to_string();
 /// assert_eq!( result, expected )
@@ -602,8 +602,8 @@ pub fn get_base_name<T: Debug + Display>(arg_string_path: &T) -> Option<String> 
 ///     "/A/B/C/D",
 /// ];
 /// let result = match get_common_path( &slice_of_strings ) {
-///     Ok( string_result ) => string_result,
-///     Err( err ) => panic!( "{}", err ),
+///     Ok( string_result ) => { string_result }
+///     Err( err ) => { panic!( "{}", err ) }
 /// };
 /// // If '/A/B' exists, then that is the common shared path and the function will return this
 /// // If '/A' exists, but '/A/B' is actually fictitious, then the function will continue
@@ -719,8 +719,8 @@ pub fn get_common_path<T: Debug + Display>(arg_slice_of_strings: &[T]) -> Result
 ///     "/A/B/C/D",
 /// ];
 /// let result = match get_common_prefix( &slice_of_strings ) {
-///     Ok( string_result ) => string_result,
-///     Err( err ) => panic!( "{}", err, ),
+///     Ok( string_result ) => { string_result }
+///     Err( err ) => { panic!( "{}", err, ) }
 /// };
 /// // If '/A/B' exists, then that is the common shared path and the function will return this,
 /// // regardless of whether or not this path actually exists
@@ -789,8 +789,8 @@ pub fn get_common_prefix<T: Debug + Display>(arg_slice_of_strings: &[T]) -> Resu
 /// * arg_n: usize-type value representing the number of layers to iterate through
 /// # Examples
 /// let result = match get_dir_ancestor_n_levels_up( &"/A/B/C", 2 ) {
-///     Some( string_result ) => string_result,
-///     None => panic!( "Failed to get ancestor" ),
+///     Some( string_result ) => { string_result }
+///     None => { panic!( "Failed to get ancestor" ) }
 /// };
 /// // result = "/A"
 pub fn get_dir_ancestor_n_levels_up<T: Debug + Display>(
@@ -815,8 +815,8 @@ pub fn get_dir_ancestor_n_levels_up<T: Debug + Display>(
 /// * arg_string_path: string-like path
 /// # Examples
 /// let result = match get_dir_ancestor_that_exists( &"/A/B/C" ) {
-///     Some( string_result ) => string_result,
-///     None => panic!( "Failed to get ancestor" ),
+///     Some( string_result ) => { string_result }
+///     None => { panic!( "Failed to get ancestor" ) }
 /// };
 /// // The returned string will be "/A/B/C" if it exists
 /// // The returned string will be "/A/B" if it exists and "/A/B/C" does not
@@ -841,8 +841,8 @@ pub fn get_dir_ancestor_that_exists<T: Debug + Display>(arg_string_path: &T) -> 
 /// Returns a string or None which is the path to the current working directory
 /// # Examples
 /// let result = match get_dir_cwd() {
-///     Ok( string_result ) => string_result,
-///     Err( err ) => panic!( "{}", err, ),
+///     Ok( string_result ) => { string_result }
+///     Err( err ) => { panic!( "{}", err, ) }
 /// };
 pub fn get_dir_cwd() -> Result<String, String> {
     match std::env::current_dir() {
@@ -872,8 +872,8 @@ pub fn get_dir_cwd() -> Result<String, String> {
 /// * arg_string_path: string-like
 /// # Examples
 /// let result = match get_dir_name( &"/A/B/C" ) {
-///     Some( string_result ) => string_result,
-///     None => panic!( "Failed to get dirname." ),
+///     Some( string_result ) => { string_result }
+///     None => { panic!( "Failed to get dirname." ) }
 /// };
 /// // result = "/A/B"
 pub fn get_dir_name<T: Debug + Display>(arg_string_path: &T) -> Option<String> {
@@ -898,8 +898,8 @@ pub fn get_dir_proj_root() -> String {
 /// * arg_string_path: string-like
 /// # Examples
 /// let result = match get_extension( "file.txt" ) {
-///     Some( string_result ) => string_result,
-///     None => panic!( "Failed to get extension." ),
+///     Some( string_result ) => { string_result }
+///     None => { panic!( "Failed to get extension." ) }
 /// };
 /// // result = "txt"
 pub fn get_extension<T: Debug + Display>(arg_string_path: &T) -> Option<String> {
@@ -915,8 +915,8 @@ pub fn get_extension<T: Debug + Display>(arg_string_path: &T) -> Option<String> 
 /// Returns a string path pointing at the binary file created by the compilation process
 /// # Examples
 /// let string_path_file_binary = match get_file_path_binary() {
-///     Ok( string_result ) => string_result,
-///     Err( err ) => panic!( "{}", err, ),
+///     Ok( string_result ) => { string_result }
+///     Err( err ) => { panic!( "{}", err, ) }
 /// };
 pub fn get_file_path_binary() -> Result<String, String> {
     match std::env::current_exe() {
@@ -998,8 +998,8 @@ pub fn get_only_file_paths_from_slice<T: Debug + Display>(
 /// * arg_slice_of_strings: slice of string-likes
 /// # Examples
 /// let string_path = match get_path_joined( &[ "/A", "B", "C" ] ) {
-///     Some( string_result ) => string_result,
-///     None => panic!( "Failed to join strings into a path." ),
+///     Some( string_result ) => { string_result }
+///     None => { panic!( "Failed to join strings into a path." ) }
 /// };
 /// string_path = "/A/B/C"
 pub fn get_path_joined<T: Debug + Display>(arg_slice_of_strings: &[T]) -> Option<String> {
@@ -1317,8 +1317,8 @@ pub fn get_paths_to_only_dirs_in_dir_and_sub_dirs<T: Display>(
 /// # Examples
 /// let string_path = "test";
 /// let result = match get_paths_to_only_files_in_dir_and_sub_dirs( &string_path ) {
-///     Ok( vec_result ) => vec_result,
-///     Err( err ) => panic!( "{}", err, )
+///     Ok( vec_result ) => { vec_result }
+///     Err( err ) => { panic!( "{}", err, ) }
 /// };
 /// let expected = [
 ///     "test/test_b/test_c/text_b_c_b.txt",
@@ -1347,8 +1347,8 @@ pub fn get_paths_to_only_files_in_dir_and_sub_dirs<T: Display>(
 /// * arg_string_path: string-like path
 /// # Examples
 /// let string_relative_path = match get_relative_path( &"/A/B/C/D", &"/A/B" ) {
-///     Ok( string_result ) => string_result,
-///     Err( err ) => panic!( "{}", err, ),
+///     Ok( string_result ) => { string_result }
+///     Err( err ) => { panic!( "{}", err, ) }
 /// };
 /// // string_relative_path = "C/D"
 pub fn get_relative_path<T1: Debug + Display, T2: Debug + Display>(
@@ -1389,8 +1389,8 @@ pub fn get_relative_path<T1: Debug + Display, T2: Debug + Display>(
 /// * arg_string_path: a string-like path
 /// # Examples
 /// let vec_of_substrings = match get_vec_by_splitting_path( &"/A/B/C/D" ) {
-///     Some( vec_result ) => vec_result,
-///     None => panic!( "Failed to split path." ),
+///     Some( vec_result ) => { vec_result }
+///     None => { panic!( "Failed to split path." ) }
 /// };
 /// // vec_of_substrings = [ "A", "B", "C", "D" ]
 pub fn get_vec_by_splitting_path<T: Debug + Display>(arg_string_path: &T) -> Option<Vec<String>> {
@@ -1452,8 +1452,8 @@ pub fn are_paths_the_same<T1: Debug + Display, T2: Debug + Display, T3: Debug + 
 /// * arg_string_path: string-like path
 /// # Examples
 /// let result = match are_paths_the_same( &"/<project dir>/test", &"test" ) {
-///     Ok( bool_result ) => bool_result,
-///     Err( err ) => panic!( "{}", err, ),
+///     Ok( bool_result ) => { bool_result }
+///     Err( err ) => { panic!( "{}", err, ) }
 /// };
 /// // result = true
 pub fn are_paths_the_same_assume_cwd<T1: Debug + Display, T2: Debug + Display>(
@@ -1582,7 +1582,7 @@ pub fn is_path_inside_dir_parent<T1: Display, T2: Display>(
 /// # Examples
 /// let err = match raise_error_if_path_does_not_exist( &"/A/B/C" ) {
 ///     Ok( () ) => {},
-///     Err( err ) => panic!( "{:?}", err, ),
+///     Err( err ) => { panic!( "{:?}", err, ) }
 /// };
 pub fn raise_error_if_path_does_not_exist<T: Debug + Display>(
     arg_string_path: &T,
@@ -1611,8 +1611,8 @@ pub fn raise_error_if_path_does_not_exist<T: Debug + Display>(
 /// * arg_string_path: string-like
 /// # Examples
 /// let err = match raise_error_if_path_is_not_in_project( &"/A/B/C" ) {
-///     Ok( () ) => {},
-///     Err( err ) => panic!( "{:?}", err, ),
+///     Ok( () ) => {}
+///     Err( err ) => { panic!( "{:?}", err, ) }
 /// };
 pub fn raise_error_if_path_is_not_in_project<T: Debug + Display>(
     arg_string_path: &T,
@@ -1648,8 +1648,8 @@ pub fn raise_error_if_path_is_not_in_project<T: Debug + Display>(
 /// * arg_string_path: string-like
 /// # Examples
 /// let err = match raise_error_if_path_points_to_project_root( &"/A/B/C" ) {
-///     Some( err ) => panic!( "{:?}", err, ),
-///     None => {},
+///     Ok( () ) => {},
+///     Err( err ) => { panic!( "{:?}", err, ) }
 /// };
 pub fn raise_error_if_path_points_to_project_root<T: Display>(
     arg_string_path: &T,
@@ -1675,8 +1675,8 @@ pub fn raise_error_if_path_points_to_project_root<T: Display>(
 /// * arg_string_path: string-like
 /// # Examples
 /// let err = match raise_error_if_path_points_to_src( &"/A/B/C" ) {
-///     Some( err ) => panic!( "{:?}", err, ),
-///     None => {},
+///     Ok( () ) => {}
+///     Err( err ) => { panic!( "{:?}", err, ) }
 /// };
 pub fn raise_error_if_path_points_to_src<T: Debug + Display>(
     arg_string_path: &T,
@@ -1699,8 +1699,8 @@ pub fn raise_error_if_path_points_to_src<T: Debug + Display>(
 /// * arg_string_path: string-like
 /// # Examples
 /// let err = match raise_error_if_path_points_to_cargo_toml( &"/A/B/C" ) {
-///     Some( err ) => panic!( "{:?}", err, ),
-///     None => {},
+///     Ok( () ) => {},
+///     Err( err ) => { panic!( "{:?}", err, ) }
 /// };
 pub fn raise_error_if_path_points_to_cargo_toml<T: Debug + Display>(
     arg_string_path: &T,
@@ -1723,8 +1723,8 @@ pub fn raise_error_if_path_points_to_cargo_toml<T: Debug + Display>(
 /// * arg_string_path: string-like
 /// # Examples
 /// let err = match raise_error_if_path_points_to_main_rs( &"/A/B/C" ) {
-///     Some( err ) => panic!( "{:?}", err, ),
-///     None => {},
+///     Ok( ()) ) => {}
+///     Err( err ) => { panic!( "{:?}", err, ) }
 /// };
 pub fn raise_error_if_path_points_to_main_rs<T: Debug + Display>(
     arg_string_path: &T,
@@ -1760,8 +1760,8 @@ pub fn get_path_buf_from_type_string<T: Debug + Display>(arg_string: &T) -> Path
 /// * arg_dir_entry: argument of type: &DirEntry
 /// # Examples
 /// let string_result = match get_string_from_type_dir_entry( &dir_entry ) {
-///     Some( string_result ) => string_result,
-///     None => panic!( "Failed to get string from DirEntry." ),
+///     Some( string_result ) => { string_result }
+///     None => { panic!( "Failed to get string from DirEntry." ) }
 /// };
 pub fn get_string_from_type_dir_entry(arg_dir_entry: &DirEntry) -> Option<String> {
     match arg_dir_entry.path().to_str() {
@@ -1776,8 +1776,8 @@ pub fn get_string_from_type_dir_entry(arg_dir_entry: &DirEntry) -> Option<String
 /// * arg_osstr: argument of type: &OsStr
 /// # Examples
 /// let string_result = match get_string_from_type_dir_entry( &os_str ) {
-///     Some( string_result ) => string_result,
-///     None => panic!( "Failed to get string from OsStr." ),
+///     Some( string_result ) => { string_result }
+///     None => { panic!( "Failed to get string from OsStr." ) }
 /// };
 pub fn get_string_from_type_osstr(arg_osstr: &OsStr) -> Option<String> {
     match arg_osstr.to_str() {
@@ -1792,8 +1792,8 @@ pub fn get_string_from_type_osstr(arg_osstr: &OsStr) -> Option<String> {
 /// * arg_path: argument of type: &Path
 /// # Examples
 /// let string_result = match get_string_from_type_dir_entry( &path_variable ) {
-///     Some( string_result ) => string_result,
-///     None => panic!( "Failed to get string from Path." ),
+///     Some( string_result ) => { string_result }
+///     None => { panic!( "Failed to get string from Path." ) }
 /// };
 pub fn get_string_from_type_path(arg_path: &Path) -> Option<String> {
     match arg_path.to_str() {
@@ -1808,8 +1808,8 @@ pub fn get_string_from_type_path(arg_path: &Path) -> Option<String> {
 /// * arg_path_buf: argument of type: &PathBuf
 /// # Examples
 /// let string_result = match get_string_from_type_dir_entry( &path_buf ) {
-///     Some( string_result ) => string_result,
-///     None => panic!( "Failed to get string from PathBuf." ),
+///     Some( string_result ) => { string_result }
+///     None => { panic!( "Failed to get string from PathBuf." ) }
 /// };
 pub fn get_string_from_type_path_buf(arg_path_buf: &PathBuf) -> Option<String> {
     match arg_path_buf.to_str() {
